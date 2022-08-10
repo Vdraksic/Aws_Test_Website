@@ -2,6 +2,7 @@ version: "3.9"
 
 services:
   site-frontend:
+    needs: database
     container_name: "nginx"
     build: ./site
     ports:

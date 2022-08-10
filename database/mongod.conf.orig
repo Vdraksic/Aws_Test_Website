@@ -9,7 +9,9 @@ storage:
   journal:
     enabled: true
 #  engine:
-#  wiredTiger:
+   wiredTiger:
+    engineConfig:
+      cacheSizeMB: 200
 
 # where to write logging data.
 systemLog:

@@ -2,7 +2,8 @@ version: "3.9"
 
 services:
   site-frontend:
-    needs: database
+    depends_on:
+    - database
     container_name: "nginx"
     build: ./site
     ports:
@@ -11,12 +12,12 @@ services:
     container_name: "mongodb"
     image: mongo
     restart: always
-    env-file:
+    env_file:
      - ./database/env_vars
     volumes:
     - mongovol:/var/lib/mongodb
     ports:
     - "27017:27017"
 
-volume:
+volumes:
   mongovol:

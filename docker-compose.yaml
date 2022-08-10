@@ -11,8 +11,7 @@ services:
     container_name: "mongodb"
     image: mongo
     restart: always
-    enviroment:
-     env-file:
+    env-file:
      - ./database/env_vars
     volumes:
     - mongovol:/var/lib/mongodb

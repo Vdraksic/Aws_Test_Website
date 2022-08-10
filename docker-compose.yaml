@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+  site-frontend:
+    container_name: "nginx"
+    build: ./site
+    ports:
+    - "80:80"
+  database:
+    container_name: "mongodb"
+    image: mongo
+    restart: always
+    enviroment:
+     env-file:
+     - ./database/env_vars
+    volumes:
+    - mongovol:/var/lib/mongodb
+    ports:
+    - "27017:27017"
+
+volume:
+  mongovol:

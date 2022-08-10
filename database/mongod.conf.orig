@@ -11,7 +11,7 @@ storage:
 #  engine:
    wiredTiger:
     engineConfig:
-      cacheSizeMB: 200
+      cacheSizeMB: 100
 
 # where to write logging data.
 systemLog:

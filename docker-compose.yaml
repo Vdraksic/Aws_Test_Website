@@ -16,6 +16,7 @@ services:
      - ./database/env_vars
     volumes:
     - mongovol:/var/lib/mongodb
+    - ./database/mongod.conf.orig:/etc/mongod.conf.orig
     ports:
     - "27017:27017"
 

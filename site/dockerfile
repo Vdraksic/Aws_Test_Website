@@ -1,10 +1,15 @@
 FROM nginx:alpine
-
+# copy nginx configuration
 COPY default /etc/nginx/conf.d/default.conf
 
+# switch to directory where the index.html and copy the website files
 WORKDIR /usr/share/nginx/html
 RUN rm -rf *
 COPY . ./
+
+# run the proper permissions otherwise 403 forbidden
+RUN chmod -R 755 /usr/share/nginx/html
+
 
 EXPOSE 80/tcp
 

@@ -28,5 +28,5 @@ jobs:
         username: ${{ secrets.SSH_USERNAME }}
         key: ${{ secrets.SSH_PRIVATE_KEY}}
         port: ${{ secrets.SSH_PORT }}
-        script: docker compose up
+        script: cd Aws_Test_Website && docker compose up
 

@@ -24,8 +24,8 @@ jobs:
     - name: Starting up docker compose remotely
       uses: appleboy/ssh-action@master
       env:
-        MONGO_ROOT_USR=${{ secrets.MONGO_ROOT_USR }}
-        MONGO_ROOT_PWD=${{ secrets.MONGO_ROOT_PWD }}     
+        MONGO_ROOT_USR: ${{ secrets.MONGO_ROOT_USR }}
+        MONGO_ROOT_PWD: ${{ secrets.MONGO_ROOT_PWD }}     
       with:
         host: ${{ secrets.SSH_IP }}
         username: ${{ secrets.SSH_USERNAME }}

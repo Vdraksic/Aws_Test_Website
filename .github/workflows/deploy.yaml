@@ -16,7 +16,7 @@ jobs:
         known_hosts: placeholder
 
     - name: Adding Known Hosts from the server
-      run: ssh-keyscan -p ${{ secrets.PORT }} -H ${{ secrets.SSH_IP}} >> ~/.ssh/known_hosts
+      run: ssh-keyscan -p ${{ secrets.SSH_PORT }} -H ${{ secrets.SSH_IP}} >> ~/.ssh/known_hosts
 
     - name: Deploy the files via rsync
       run: rsync -vr . ${{ secrets.SSH_USERNAME}}@${{ secrets.SSH_IP}}:/home/vjeks/Aws_Test_Website

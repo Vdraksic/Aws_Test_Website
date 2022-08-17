@@ -32,6 +32,8 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY}}
         port: ${{ secrets.SSH_PORT }}
         envs: MONGO_ROOT_USR,MONGO_ROOT_PWD
-        script: cd Aws_Test_Website && env && docker compose build --build-arg MONGO_INITDB_ROOT_USERNAME=$MONGO_ROOT_USR --build-arg MONGO_INITDB_ROOT_PASSWORD=$MONGO_ROOT_PWD && docker compose up -d
+        script: |
+          echo "I am $MONGO_ROOT_USR"
+        #script: cd Aws_Test_Website && env && docker compose build --build-arg MONGO_INITDB_ROOT_USERNAME=$MONGO_ROOT_USR --build-arg MONGO_INITDB_ROOT_PASSWORD=$MONGO_ROOT_PWD && docker compose up -d
         
 

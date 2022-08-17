@@ -21,9 +21,6 @@ jobs:
     - name: Deploy the files via rsync
       run: rsync -vr . ${{ secrets.SSH_USERNAME}}@${{ secrets.SSH_IP}}:/home/vjeks/Aws_Test_Website
       
-    - name: show env
-      run: env
-      
     - name: Starting up docker compose remotely
       uses: appleboy/ssh-action@master
       env:
@@ -34,6 +31,6 @@ jobs:
         username: ${{ secrets.SSH_USERNAME }}
         key: ${{ secrets.SSH_PRIVATE_KEY}}
         port: ${{ secrets.SSH_PORT }}
-        script: cd Aws_Test_Website && docker compose build --build-arg MONGO_INITDB_ROOT_USERNAME=$MONGO_ROOT_USR --build-arg MONGO_INITDB_ROOT_PASSWORD=$MONGO_ROOT_PWD && docker compose up -d
+        script: cd Aws_Test_Website && env && docker compose build --build-arg MONGO_INITDB_ROOT_USERNAME=$MONGO_ROOT_USR --build-arg MONGO_INITDB_ROOT_PASSWORD=$MONGO_ROOT_PWD && docker compose up -d
         
 

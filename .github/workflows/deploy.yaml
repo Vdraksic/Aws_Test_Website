@@ -24,13 +24,29 @@ jobs:
     - name: Starting up docker compose remotely
       uses: appleboy/ssh-action@master
       env:
-        MONGO_ROOT_USR: ${{ secrets.MONGO_ROOT_USR }}
+        MONGO_ROOT_USR: ${{ secrets.MONGO_ROOT_USR }} 
         MONGO_ROOT_PWD: ${{ secrets.MONGO_ROOT_PWD }}     
       with:
         host: ${{ secrets.SSH_IP }}
         username: ${{ secrets.SSH_USERNAME }}
         key: ${{ secrets.SSH_PRIVATE_KEY}}
         port: ${{ secrets.SSH_PORT }}
-        script: cd Aws_Test_Website && docker compose build --build-arg MONGO_INITDB_ROOT_USERNAME=$MONGO_ROOT_USR --build-arg MONGO_INITDB_ROOT_PASSWORD=$MONGO_ROOT_PWD && docker compose up -d
+        envs: MONGO_ROOT_USR,MONGO_ROOT_PWD
+        script: |
+          echo "I am $MONGO_ROOT_USR"
+          echo blabla
+          cd Aws_Test_Website && docker compose down && docker compose build --build-arg MONGO_INITDB_ROOT_USERNAME=$MONGO_ROOT_USR --build-arg MONGO_INITDB_ROOT_PASSWORD=$MONGO_ROOT_PWD && docker compose up -d
         
-
+    - name: Status Check
+      uses: appleboy/ssh-action@master
+      env:
+        MONGO_ROOT_USR: ${{ secrets.MONGO_ROOT_USR }} 
+        MONGO_ROOT_PWD: ${{ secrets.MONGO_ROOT_PWD }}     
+      with:
+        host: ${{ secrets.SSH_IP }}
+        username: ${{ secrets.SSH_USERNAME }}
+        key: ${{ secrets.SSH_PRIVATE_KEY}}
+        port: ${{ secrets.SSH_PORT }}
+        envs: MONGO_ROOT_USR,MONGO_ROOT_PWD
+        script: |
+          docker ps

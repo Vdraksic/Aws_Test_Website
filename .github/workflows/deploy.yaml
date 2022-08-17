@@ -21,6 +21,9 @@ jobs:
     - name: Deploy the files via rsync
       run: rsync -vr . ${{ secrets.SSH_USERNAME}}@${{ secrets.SSH_IP}}:/home/vjeks/Aws_Test_Website
       
+    -name: show env
+      run: env
+      
     - name: Starting up docker compose remotely
       uses: appleboy/ssh-action@master
       env:

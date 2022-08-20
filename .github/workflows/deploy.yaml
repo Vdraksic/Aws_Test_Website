@@ -24,8 +24,8 @@ jobs:
     - name: Starting up docker compose remotely 
       uses: appleboy/ssh-action@master  
       env:
-        MONGO_ROOT_USR: test 
-        MONGO_ROOT_PWD: test 
+        MONGO_ROOT_USR: ${{ secrets.MONGO_ROOT_USR }} 
+        MONGO_ROOT_PWD: ${{ secrets.MONGO_ROOT_PWD }}
       with:
         host: ${{ secrets.SSH_IP }}
         username: ${{ secrets.SSH_USERNAME }}
@@ -35,8 +35,8 @@ jobs:
         script: |
           echo "I am $MONGO_ROOT_USR"
           echo "I am $MONGO_ROOT_PWD"
-          export MONGO_INITDB_ROOT_USERNAME=$(echo "$MONGO_ROOT_USR")
-          export MONGO_INITDB_ROOT_PASSWORD=$(echo "$MONGO_ROOT_PWD")
+          export MONGO_INITDB_ROOT_USERNAME=$MONGO_ROOT_USR
+          export MONGO_INITDB_ROOT_PASSWORD=$MONGO_ROOT_PWD
           cd Aws_Test_Website && docker compose down && docker compose build && docker compose up -d
         
     - name: Status Check

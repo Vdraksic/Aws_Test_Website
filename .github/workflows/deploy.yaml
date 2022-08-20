@@ -22,10 +22,10 @@ jobs:
       run: rsync -vr . ${{ secrets.SSH_USERNAME}}@${{ secrets.SSH_IP}}:/home/vjeks/Aws_Test_Website
       
     - name: Starting up docker compose remotely
-      uses: appleboy/ssh-action@master
       env:
         MONGO_ROOT_USR: ${{ secrets.MONGO_ROOT_USR }} 
-        MONGO_ROOT_PWD: ${{ secrets.MONGO_ROOT_PWD }}     
+        MONGO_ROOT_PWD: ${{ secrets.MONGO_ROOT_PWD }}   
+      uses: appleboy/ssh-action@master     
       with:
         host: ${{ secrets.SSH_IP }}
         username: ${{ secrets.SSH_USERNAME }}

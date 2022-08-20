@@ -35,8 +35,8 @@ jobs:
         script: |
           echo "I am $MONGO_ROOT_USR"
           echo "I am $MONGO_ROOT_PWD"
-          export MONGO_INITDB_ROOT_USERNAME=$MONGO_ROOT_USR
-          export MONGO_INITDB_ROOT_PASSWORD=$MONGO_ROOT_PWD
+          export MONGO_INITDB_ROOT_USERNAME=$(echo "$MONGO_ROOT_USR")
+          export MONGO_INITDB_ROOT_PASSWORD=$(echo "$MONGO_ROOT_PWD")
           cd Aws_Test_Website && docker compose down && docker compose build && docker compose up -d
         
     - name: Status Check

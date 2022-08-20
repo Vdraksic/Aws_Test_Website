@@ -14,9 +14,8 @@ services:
     volumes:
     - mongovol:/var/lib/mongodb
     - ./database/mongod.conf.orig:/etc/mongod.conf
-    enviroment:
-    - MONGO_INITDB_ROOT_USERNAME= $MONGO_ROOT_USR
-    - MONGO_INITDB_ROOT_PASSWORD= $MONGO_ROOT_PWD
+    env_file:
+    - database/env_var
     ports:
     - "27017:27017"
 

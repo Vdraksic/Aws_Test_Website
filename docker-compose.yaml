@@ -8,6 +8,7 @@ services:
     build: ./site
     ports:
     - "80:80"
+    
   database:
     container_name: "mongodb"
     image: mongo

@@ -19,7 +19,7 @@ jobs:
       run: ssh-keyscan -p ${{ secrets.SSH_PORT }} -H ${{ secrets.SSH_IP}} >> ~/.ssh/known_hosts
 
     - name: Deploy the files via rsync
-      run: rsync -vr . ${{ secrets.SSH_USERNAME}}@${{ secrets.SSH_IP}}:/home/vjeks/Aws_Test_Website
+      run: rsync -avzh . ${{ secrets.SSH_USERNAME}}@${{ secrets.SSH_IP}}:/home/vjeks/Aws_Test_Website
       
     - name: Starting up docker compose remotely 
       uses: appleboy/ssh-action@master  

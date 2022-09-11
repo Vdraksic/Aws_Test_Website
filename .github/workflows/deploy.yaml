@@ -36,7 +36,7 @@ jobs:
           echo "I am $MONGO_ROOT_USR"
           echo "I am $MONGO_ROOT_PWD"
           # Writes env variables to env file for mongodb startup
-          cd Aws_Test_Website && printf '%s\n' 'MONGO_INITDB_ROOT_USERNAME=$MONGO_ROOT_USR' 'MONGO_INITDB_ROOT_PASSWORD=$MONGO_ROOT_PWD' > database/env_var
+          cd Aws_Test_Website && printf '%s\n' "MONGO_INITDB_ROOT_USERNAME=$MONGO_ROOT_USR" "MONGO_INITDB_ROOT_PASSWORD=$MONGO_ROOT_PWD" > database/env_var
           # rebuild and startup docker
           docker compose down && docker compose build && docker compose up -d
         

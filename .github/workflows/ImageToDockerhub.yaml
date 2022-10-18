@@ -32,6 +32,6 @@ jobs:
       - name: Push to dockerhub
         uses: elgohr/Publish-Docker-Github-Action@v4
         with:
-          name: 03-pipelines:latest
+          name: test:latest
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}

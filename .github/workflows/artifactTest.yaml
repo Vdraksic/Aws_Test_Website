@@ -1,1 +1,18 @@
+name: docker-build-v2
 
+on: workflow_dispatch
+
+jobs:
+  upload:
+    runs-on: ubuntu-lastes
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: create file
+      run: mkdir artifact && cd artifact && touch artifact.txt
+    
+    - uses: actions/upload-artifact@v3
+      with:
+        name: my-artifact
+        path: artifact/artifact.txt

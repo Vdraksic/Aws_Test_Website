@@ -17,3 +17,4 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
           workdir: site 
           tags: "test"
+          snapshot: true

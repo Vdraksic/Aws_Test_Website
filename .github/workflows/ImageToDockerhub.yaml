@@ -29,12 +29,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       
-      - name: Position to folder
-        run: cd site
-
+      - name: location check
+        run: pwd
+      
       - name: Push to dockerhub
         uses: elgohr/Publish-Docker-Github-Action@v4
         with:
           name: test:latest
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+          workdir: site 

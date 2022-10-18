@@ -1,5 +1,5 @@
-Practice project for the purpose of testing: AWS, Docker, Docker compose and Github actions
-A staic website and database for testing purposes.
+Practice project for the purpose of testing: AWS, Docker, Docker compose and Github actions.
+A static website and database for testing purposes.
 
 What it does: ( When the deploy action is manually run )
 

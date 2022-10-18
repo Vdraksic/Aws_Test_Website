@@ -12,8 +12,7 @@ jobs:
     - name: Push to dockerhub
       uses: elgohr/Publish-Docker-Github-Action@v4
       with:
-          name: test:latest
+          name: vdraksic/practice_1
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
           workdir: site 
-          registry: hub.docker.com

@@ -1,10 +1,10 @@
-name: docker-build-v2
+name: artifact_upload
 
 on: workflow_dispatch
 
 jobs:
   upload:
-    runs-on: ubuntu-lastes
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout code
       uses: actions/checkout@v3

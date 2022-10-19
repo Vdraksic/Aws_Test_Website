@@ -20,7 +20,9 @@ jobs:
              chmod +x ~/.docker/cli-plugins/docker-scan
           
       - name: Docker login and Docker scan
-        run: docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password ${{ secrets.DOCKERHUB_TOKEN }} && docker scan --accept-license latest > scan.txt
+        run: | 
+            docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password ${{ secrets.DOCKERHUB_TOKEN }} 
+            docker scan --accept-license latest > scan.txt
         
       - name: Upload scan results
         uses: actions/upload-artifact@v3

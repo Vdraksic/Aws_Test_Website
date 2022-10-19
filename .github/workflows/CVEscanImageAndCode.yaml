@@ -15,16 +15,16 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
           
-    PhonitoScan:
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v3
+  PhonitoScan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
         
-        - name: Build docker image
-          run: cd site && docker build . --tag latest
+      - name: Build docker image
+        run: cd site && docker build . --tag latest
           
-        - name: Docker login and Docker scan
-          run: docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password ${{ secrets.DOCKERHUB_PASSWORD }} && docker scan latest
+      - name: Docker login and Docker scan
+        run: docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password ${{ secrets.DOCKERHUB_PASSWORD }} && docker scan latest
         
           
           

@@ -1,0 +1,31 @@
+# action for scanning container image and app code for CVE
+
+name: CVE scan
+
+on: workflow_dispatch
+
+jobs:
+  SnykScan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Run Snyk for app code vulnerabilities
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+          
+    PhonitoScan:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v3
+        
+        - name: Build docker image
+          run: cd site && docker build . --tag latest
+          
+        - name: Docker login and Docker scan
+          run: docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password ${{ secrets.DOCKERHUB_PASSWORD }} && docker scan latest
+        
+          
+          
+   

@@ -11,7 +11,7 @@ on:
 jobs:
   build:
    if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
-   runs-on: ubuntu-lastest
+   runs-on: ubuntu-latest
    steps:
    - name: Testrun
      run: echo test complete!

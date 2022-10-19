@@ -1,1 +1,23 @@
 # Post workflow status to slack
+
+name: post-to-slack
+
+on: workflow_dispatch
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v3
+    
+    - name: do something arbirary
+      run: touch file
+      
+    - name: Report status
+      if: always()
+      uses: ravsamhq/notify-slack-action@v2
+      with:
+        status: ${{ job.status }}
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_ULR }}

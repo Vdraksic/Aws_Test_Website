@@ -13,11 +13,13 @@ jobs:
       - name: Build docker image
         run: cd site && docker build . --tag latest && echo $PATH
         
-      - name: Get docker scan
-        run: sudo apt-get update && \
-             sudo apt-get install -y curl && \
-             mkdir -p ~/.docker/cli-plugins && \
-             curl https://github.com/docker/scan-cli-plugin/releases/latest/download/docker-scan_linux_amd64 -L -s -S -o ~/.docker/cli-plugins/docker-scan &&\
+      - name: Update and install curl
+        run: sudo apt-get update && sudo apt-get install -y curl 
+        
+      - name: Get docker scan plugin  
+        run: | 
+             mkdir -p ~/.docker/cli-plugins && 
+             curl https://github.com/docker/scan-cli-plugin/releases/latest/download/docker-scan_linux_amd64 -L -s -S -o ~/.docker/cli-plugins/docker-scan
              chmod +x ~/.docker/cli-plugins/docker-scan
           
       - name: Docker login and Docker scan

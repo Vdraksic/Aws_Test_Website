@@ -20,18 +20,15 @@ jobs:
              chmod +x ~/.docker/cli-plugins/docker-scan
           
       - name: Docker login and Docker scan
-        run: docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password ${{ secrets.DOCKERHUB_TOKEN }} && docker scan --accept-license latest
+        run: docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password ${{ secrets.DOCKERHUB_TOKEN }} && docker scan --accept-license latest > scan.txt
         
-  SnykScan:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      
-      - name: Run Snyk for app code vulnerabilities
-        uses: snyk/actions/dotnet@master
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-          
+      - name: Upload scan results
+        uses: actions/upload-artifact@v3
+        with:
+          name: scan_results
+          path: scan.txt
+        
+
 
           
           

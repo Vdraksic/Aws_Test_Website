@@ -1,3 +1,5 @@
+# Action for testing buidling docker image and uploading it to dockerhub
+
 name: docker-build-v2
 
 on: workflow_dispatch

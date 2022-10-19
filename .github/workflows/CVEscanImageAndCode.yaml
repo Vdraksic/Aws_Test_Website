@@ -11,7 +11,7 @@ jobs:
       - uses: actions/checkout@v3
         
       - name: Build docker image
-        run: cd site && docker build . --tag latest 
+        run: cd site && docker build . --tag scan
              
       - name: Get docker scan plugin  
         run: | 
@@ -22,13 +22,7 @@ jobs:
       - name: Docker login and Docker scan
         run: | 
             docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password ${{ secrets.DOCKERHUB_TOKEN }} 
-            docker scan --accept-license latest > scan.txt
-        
-      - name: Upload scan results
-        uses: actions/upload-artifact@v3
-        with:
-          name: scan_results
-          path: scan.txt
+            docker scan --accept-license scan
         
 
 

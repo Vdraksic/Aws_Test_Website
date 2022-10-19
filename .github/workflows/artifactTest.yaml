@@ -1,3 +1,5 @@
+# Simple action for testing artifact upload
+
 name: artifact_upload
 
 on: workflow_dispatch

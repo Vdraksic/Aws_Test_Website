@@ -20,7 +20,7 @@ jobs:
              chmod +x ~/.docker/cli-plugins/docker-scan
           
       - name: Docker login and Docker scan
-        run: docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password ${{ secrets.DOCKERHUB_TOKEN }} && docker scan --accept-licence latest
+        run: docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password ${{ secrets.DOCKERHUB_TOKEN }} && docker scan --accept-license latest
         
   SnykScan:
     runs-on: ubuntu-latest

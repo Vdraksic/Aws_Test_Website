@@ -1,1 +1,17 @@
 # Testing action run on PR merge ot main
+
+name: TriggerOnMergeToMain
+
+on:
+  pull_request:
+    branches:
+    - 'main'
+    types: [closed]
+    
+ jobs:
+   build:
+     if: github.even.pull_request.merged == 'true'
+     runs-on: ubuntu-lastest
+     steps:
+     - name: Testrun
+       run: echo test complete!

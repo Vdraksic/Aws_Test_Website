@@ -50,7 +50,7 @@ jobs:
     - name: Load docker image and upload to Dockerhub
       run: |
             docker load --input test.tar
-            docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+            docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }
             docker push ${{ secrets.DOCKERHUB_REPO }}:test
             
     - name: Report Success
@@ -62,14 +62,15 @@ jobs:
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
-# This job has the previous two jobs as dependencies and notifies slack on faliure
+# This job has the previous two jobs as dependencies and notifies slack on faliure 
   SlackReportOnFail:
     needs: [BuildAndTag, UploadImage]
+    if: always()
     runs-on: ubuntu-latest
     
     steps:
-    - name: Report Success
-      if: always()
+    - name: Report Faliure
+      if: ${{ failure() }}
       uses: ravsamhq/notify-slack-action@v1
       with:
         status: ${{ job.status }}

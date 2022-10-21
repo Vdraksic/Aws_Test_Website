@@ -16,7 +16,7 @@ jobs:
     - name: Build and tag Docker image
       run: |
            cd site
-           docker build . -t ${{ secrets.DOCKERHUB_REPO }}:test
+           docker build . -t ${{ secrets.DOCKERHUB_REPO }}:test 
            docker save ${{ secrets.DOCKERHUB_REPO }}:test > test.tar
           
     - name: Upload image as artifact      
@@ -34,7 +34,7 @@ jobs:
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
-# This job downloads the image artifact, loads it, tags it and pushes it to Dockerhub after logging in. The last step sends a slack notification on success
+# This job downloads the image artifact, loads it and pushes it to Dockerhub after logging in. The last step sends a slack notification on success
   UploadImage:
     needs: BuildAndTag
     runs-on: ubuntu-latest

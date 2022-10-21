@@ -62,21 +62,16 @@ jobs:
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
-# This job has the previous two jobs as dependencies and notifies slack on faliure 
+# This job has the previous two jobs as dependencies and notifies slack on faliure.
   SlackReportOnFail:
     needs: [BuildAndTag, UploadImage]
-    if: always()
+    if: failure()
     runs-on: ubuntu-latest
     
     steps:
     - name: Report Faliure
-      if: ${{ failure() }}
-      uses: ravsamhq/notify-slack-action@v1
-      with:
-        status: ${{ job.status }}
-        notify_when: 'faliure'
-      env:
-        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}  
+      run: curl -X POST -H 'Content-type: application/json' --data '{"text":"Failed, back to the drawing board"}' ${{ secrets.SLACK_WEBHOOK_URL }}
+           
             
             
       

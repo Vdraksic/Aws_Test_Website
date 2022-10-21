@@ -50,7 +50,7 @@ jobs:
     - name: Load docker image and upload to Dockerhub
       run: |
             docker load --input test.tar
-            docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }
+            docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKE }}
             docker push ${{ secrets.DOCKERHUB_REPO }}:test
             
     - name: Report Success

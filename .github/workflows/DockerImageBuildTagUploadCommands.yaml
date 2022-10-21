@@ -8,7 +8,7 @@ on: workflow_dispatch
 # This job builds and tags an image, saves it and uploads it as an artifact. The last step sends a slack notification on success
 jobs:
   BuildAndTag:
-    runs-on: ubunutu-latest
+    runs-on: ubuntu-latest
     
     steps:
     - uses: actions/checkout@v3

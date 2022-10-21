@@ -5,7 +5,7 @@ name: docker-image-build-upload-commands
 
 on: workflow_dispatch
 
-# This job builds and tags an image, saves it and uploads it as an artifact. The last step sends a slack notification on success
+# This job builds an image, tags it, saves it and uploads it as an artifact. The last step sends a slack notification on success
 jobs:
   BuildAndTag:
     runs-on: ubuntu-latest
@@ -16,8 +16,8 @@ jobs:
     - name: Build and tag Docker image
       run: |
            cd site
-           docker build . -t test
-           docker save test > test.tar
+           docker build . -t ${{ secrets.DOCKERHUB_REPO }}:test
+           docker save ${{ secrets.DOCKERHUB_REPO }}:test > test.tar
           
     - name: Upload image as artifact      
       uses: actions/upload-artifact@v3
@@ -34,7 +34,7 @@ jobs:
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
-# This job downloads the image artifact, loads it and pushes it to Dockerhub. The last step sends a slack notification on success
+# This job downloads the image artifact, loads it, tags it and pushes it to Dockerhub. The last step sends a slack notification on success
   UploadImage:
     needs: BuildAndTag
     runs-on: ubuntu-latest
@@ -50,7 +50,7 @@ jobs:
     - name: Load docker image and upload to Dockerhub
       run: |
             docker load --input test.tar
-            docker push vdraksic/practice_1:test
+            docker push ${{ secrets.DOCKERHUB_REPO }}:test
             
     - name: Report Success
       if: always()

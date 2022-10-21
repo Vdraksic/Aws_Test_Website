@@ -70,8 +70,5 @@ jobs:
     
     steps:
     - name: Report Faliure
-      run: curl -X POST -H 'Content-type: application/json' --data '{"text":"Failed, back to the drawing board"}' ${{ secrets.SLACK_WEBHOOK_URL }}
-           
-            
-            
-      
+      run: |
+           curl -X POST -H 'Content-type: application/json' --data '{"text":"Failed, back to the drawing board"}' ${{ secrets.SLACK_WEBHOOK_URL }}

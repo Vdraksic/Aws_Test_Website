@@ -1,2 +1,0 @@
-# Test action to build, tag and upload docker image but without a unified action that does everything at once
-# Made in multiple steps with commands

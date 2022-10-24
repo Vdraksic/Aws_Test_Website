@@ -3,7 +3,11 @@
 name: Tagged release
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - 'master'
+    tags:
+      - 'v*'
 
 jobs:
   docker:

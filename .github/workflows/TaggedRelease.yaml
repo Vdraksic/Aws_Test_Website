@@ -2,12 +2,14 @@
 name: ci
 
 on:
-  workflow_dispatch:
   push:
     branches:
       - 'main'
     tags:
       - 'v*'
+  pull_request:
+    branches:
+      - 'main'
 
 jobs:
   docker:
@@ -21,12 +23,13 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
+          images: |
+            vdraksic/practice_1
           tags: |
-                type=semver,pattern={{major}}.{{minor}}
-                type=semver,pattern={{version}}
-                type=semver,pattern={{major}}
-                
-          images: vdraksic/practice_1
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
       -
         name: Login to DockerHub
         if: github.event_name != 'pull_request'
@@ -38,7 +41,7 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v3
         with:
-          context: site
+          context: .
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

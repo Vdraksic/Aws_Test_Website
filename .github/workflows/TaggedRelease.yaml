@@ -1,26 +1,39 @@
 # uses git tag to tag and relese docker image on dockerhub
-
-name: Build and release Docker images with git tag
+name: ci
 
 on:
+  workflow_dispatch:
   push:
-    branches-ignore:
-      - '**'
+    branches:
+      - 'main'
     tags:
-      - 'v*.*.*'
+      - 'v*'
 
 jobs:
-  build:
+  docker:
     runs-on: ubuntu-latest
     steps:
-
-      - uses: actions/checkout@v3
+      -
+        name: Checkout
+        uses: actions/checkout@v3
+      -
+        name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
         with:
-          fetch-depth: 1
-
-      - name: Build Docker image
-        uses: flownative/action-docker-build@v1
+          images: vdraksic/practice_1
+      -
+        name: Login to DockerHub
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v2
         with:
-          tag_ref: ${{ github.ref }}
-          image_name: vdraksic/practice_1
-          registry_password: ${{ secrets.GITHUB_TOKEN }}
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      -
+        name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          context: site
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}

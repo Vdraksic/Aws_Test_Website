@@ -21,6 +21,8 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
+          tags: |
+                type=semver,pattern={{version}}
           images: vdraksic/practice_1
       -
         name: Login to DockerHub

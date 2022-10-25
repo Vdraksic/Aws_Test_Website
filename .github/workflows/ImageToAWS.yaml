@@ -5,19 +5,19 @@ name: AWS build and push
 on: workflow_dispatch
 
 jobs:
-  build:
+  build-and-push:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-
-    - run: cd site && docker build --tag academy-test:test .
-    - name: Push to ECR
-      id: ecr
-      uses: jwalton/gh-ecr-push@v1
+    - uses: actions/checkout@v3
+    - uses: docker://ghcr.io/kciter/aws-ecr-action:latest
       with:
-        access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        account_id: ${{ secrets.AWS_ACC_ID }}
+        repo: academy-test
         region: ${{ secrets.AWS_REGION }}
-        image: academy-test:test
+        tags: test
+        create_repo: false
+        image_scanning_configuration: true
 
+        

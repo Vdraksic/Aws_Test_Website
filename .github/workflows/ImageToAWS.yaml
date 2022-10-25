@@ -19,5 +19,6 @@ jobs:
         tags: test
         create_repo: false
         image_scanning_configuration: true
+        path: site
 
         

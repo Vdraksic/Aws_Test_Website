@@ -1,47 +1,51 @@
 # uses git tag to tag and relese docker image on dockerhub
-name: ci
+name: Tag and build
 
 on:
   push:
-    branches:
-      - 'main'
     tags:
       - 'v*'
-  pull_request:
-    branches:
-      - 'main'
 
 jobs:
-  docker:
+  TagPush:
     runs-on: ubuntu-latest
     steps:
-      -
-        name: Checkout
+      
+      - name: Checkout
         uses: actions/checkout@v3
-      -
-        name: Docker meta
-        id: meta
+      
+      - name: Get metadata
+        id: metadata
         uses: docker/metadata-action@v4
         with:
           images: |
             vdraksic/practice_1
-          tags: |
-            type=ref,event=branch
-            type=ref,event=pr
+          tags: |      
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
-      -
-        name: Login to DockerHub
+      
+      - name: Login
         if: github.event_name != 'pull_request'
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      -
-        name: Build and push
+      
+      - name: Build and push
         uses: docker/build-push-action@v3
         with:
           context: site
+          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/practice_1:buildcache
+          cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/practice_1:buildcache,mode=max
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: ${{ steps.metadata.outputs.tags }}
+          labels: ${{ steps.metadata.outputs.labels }}
+
+      - name: Report Success
+        if: always()
+        uses: ravsamhq/notify-slack-action@v1
+        with:
+          status: ${{ job.status }}
+          notify_when: 'success'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}

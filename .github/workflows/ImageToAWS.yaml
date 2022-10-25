@@ -4,6 +4,13 @@ name: AWS build and push
 
 on: workflow_dispatch
 
+# setting env vars for programmatic access for the docker-image-push user
+
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
+
 jobs:
   build-and-push:
 
@@ -11,11 +18,16 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: upload image to ECR
+    - name: build and tag docker image
       run: |
-            export AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}
-            export AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}
-            export AWS_DEFAULT_REGION=${{ secrets.AWS_REGION }}
             cd site && docker build . -t ${{ secrets.AWS_ACC_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.AWS_REPO }}:test
+
+    - name: Authenticating Docker client to the ECR registry       
+      run: |
             aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.AWS_ACC_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
+
+    - name: Push docker image to ECR
+      run: |
             docker push ${{ secrets.AWS_ACC_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.AWS_REPO }}:test
+                    
+            

@@ -18,6 +18,7 @@ jobs:
         secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         repo: ${{ secrets.AWS_REPO }}
         registry: ${{ secrets.AWS_ACC_ID }}dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
+        region: ${{ secrets.AWS_REGION }}
         tags: test
-        dockerfile: site
+        dockerfile: site/dockerfile
         

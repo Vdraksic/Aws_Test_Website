@@ -6,19 +6,18 @@ on: workflow_dispatch
 
 jobs:
   build-and-push:
+
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - uses: docker://ghcr.io/kciter/aws-ecr-action:latest
-      with:
-        access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        account_id: ${{ secrets.AWS_ACC_ID }}
-        repo: academy-test
-        region: ${{ secrets.AWS_REGION }}
-        tags: test
-        create_repo: false
-        image_scanning_configuration: true
-        path: site
 
+    - name: upload image to ECR
+      uses: appleboy/docker-ecr-action@master
+      with:
+        access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        repo: ${{ secrets.AWS_REPO }}
+        registry: ${{ secrets.AWS_ACC_ID }}dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
+        tags: test
+        dockerfile: site
         

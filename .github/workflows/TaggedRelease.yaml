@@ -33,16 +33,11 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2  
-      
-      - name: set up QEMU
-        uses: docker/setup-qemu-action@v2
 
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
           context: site
-          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/practice_1:buildcache
-          cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/practice_1:buildcache,mode=max
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.metadata.outputs.tags }}
           labels: ${{ steps.metadata.outputs.labels }}

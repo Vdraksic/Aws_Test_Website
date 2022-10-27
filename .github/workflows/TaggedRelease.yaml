@@ -1,10 +1,8 @@
 # uses git tag to tag and relese docker image on dockerhub
 name: Tag and build
 
-on:
-  push:
-    tags:
-      - 'v*'
+on: 
+  workflow_dispatch:
 
 jobs:
   TagPush:

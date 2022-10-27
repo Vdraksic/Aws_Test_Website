@@ -19,5 +19,5 @@ jobs:
           image: vdraksic/practice_1
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}   
-          workdir: site
+          workdir: Aws_Test_Website/site
           tag_semver: skip

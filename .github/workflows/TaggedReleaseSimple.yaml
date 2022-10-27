@@ -1,9 +1,6 @@
 name: Simple-tag
 
-on:
-  push:
-    tags:
-      - 'v*'
+on: workflow_dispatch
 
 jobs:
   TagPush:

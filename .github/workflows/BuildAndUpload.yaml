@@ -26,6 +26,6 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: ./site
-          file: academy_project/dockerfile
+          file: site/dockerfile
           push: true
           tags: vdraksic/practice_1:latest
